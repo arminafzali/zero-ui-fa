@@ -7,7 +7,7 @@ var token;
 if (process.env.ZU_CONTROLLER_TOKEN) {
   token = process.env.ZU_CONTROLLER_TOKEN;
 } else {
-  token = fs.readFileSync("/var/lib/zerotier-one/authtoken.secret", "utf8");
+  token = fs.readFileSync("C:/ProgramData/ZeroTier/One/authtoken.secret", "utf8");
 }
 
 module.exports = axios.create({
