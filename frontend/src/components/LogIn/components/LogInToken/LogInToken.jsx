@@ -11,6 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
+import { checkfa } from "utils/checkfa";
 
 function LogInToken() {
   const [open, setOpen] = useState(false);
@@ -55,12 +56,17 @@ function LogInToken() {
   return (
     <div>
       <Button onClick={handleClickOpen} color="inherit" variant="outlined">
-        Token Log In
+        {checkfa ? "ورود با توکن" : "  Token Log In"}
       </Button>
       <Dialog open={open} onClose={handleClose} onKeyPress={handleKeyPress}>
-        <DialogTitle>Log In</DialogTitle>
+        <DialogTitle>
+          {" "}
+          {checkfa ? "ورود با توکن" : "  Token Log In"}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>ADVANCED FEATURE.</DialogContentText>
+          <DialogContentText>
+            {checkfa ? "فیچر پیشرفته." : "ADVANCED FEATURE."}
+          </DialogContentText>
           <TextField
             value={token}
             onChange={(e) => {
@@ -69,17 +75,17 @@ function LogInToken() {
             error={!!errorText}
             helperText={errorText}
             margin="dense"
-            label="token"
+            label={checkfa ? "توکن" : "token"}
             type="text"
             fullWidth
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {checkfa ? "انصراف" : "Cancel"}
           </Button>
           <Button onClick={LogIn} color="primary">
-            Log In
+            {checkfa ? "ورود" : "Log In"}
           </Button>
         </DialogActions>
       </Dialog>

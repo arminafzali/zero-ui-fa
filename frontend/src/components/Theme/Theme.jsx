@@ -12,6 +12,9 @@ const theme = createTheme({
     },
     type: "light",
   },
+  typography: {
+    fontFamily: `'IRAN SANS', "Roboto", "Helvetica", "Arial", sans-serif`,
+  },
 });
 
 function Theme({ children }) {

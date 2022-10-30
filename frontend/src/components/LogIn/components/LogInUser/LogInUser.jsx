@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 
 import axios from "axios";
+import { checkfa } from "utils/checkfa";
 
 function LogInUser() {
   const [open, setOpen] = useState(false);
@@ -72,10 +73,10 @@ function LogInUser() {
   return (
     <>
       <Button onClick={handleClickOpen} color="primary" variant="contained">
-        Log In
+        {localStorage.getItem("lang") === "fa" ? "ورود" : "Log In"}
       </Button>
       <Dialog open={open} onClose={handleClose} onKeyPress={handleKeyPress}>
-        <DialogTitle>Log In</DialogTitle>
+        <DialogTitle>{checkfa ? "ورود" : "Log In"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -84,7 +85,7 @@ function LogInUser() {
               setUsername(e.target.value);
             }}
             margin="dense"
-            label="username"
+            label={checkfa ? "نام کاربری" : "username"}
             type="username"
             fullWidth
           />
@@ -94,17 +95,17 @@ function LogInUser() {
               setPassword(e.target.value);
             }}
             margin="dense"
-            label="password"
+            label={checkfa ? "رمز عبور" : "password"}
             type="password"
             fullWidth
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {checkfa ? "انصراف" : "Cancel"}
           </Button>
           <Button onClick={LogIn} color="primary">
-            Log In
+            {checkfa ? "ورود" : "Log In"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -114,7 +115,11 @@ function LogInUser() {
           vertical: "top",
           horizontal: "center",
         }}
-        message="Invalid username or password"
+        message={
+          checkfa
+            ? "نام کاربری یا رمز عبور نادرست است"
+            : "Invalid username or password"
+        }
       />
     </>
   );
