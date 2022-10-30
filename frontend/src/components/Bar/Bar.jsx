@@ -40,6 +40,15 @@ function Bar() {
     history.push("/");
     history.go(0);
   };
+  const langChangeHandler = () => {
+    if (localStorage.getItem("lang") == "fa") {
+      localStorage.setItem("lang", "en");
+      window.location.reload();
+    } else {
+      localStorage.setItem("lang", "fa");
+      window.location.reload();
+    }
+  };
 
   const menuItems = [
     // TODO: add settings page
@@ -50,7 +59,7 @@ function Bar() {
     ...(!disabledAuth
       ? [
           {
-            name: "Log out",
+            name: localStorage.getItem("lang") === "fa" ? "خروج" : "Log out",
             divide: true,
             onClick: onLogOutClick,
           },
@@ -61,11 +70,24 @@ function Bar() {
   return (
     <AppBar
       color="secondary"
-      style={{ background: "#000000" }}
+      style={{
+        background: "#000000",
+        direction: localStorage.getItem("lang") === "fa" ? "rtl" : "ltr",
+      }}
       position="static"
     >
       <Toolbar>
-        <Box display="flex" flexGrow={1}>
+        <Box>
+          <p
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={langChangeHandler}
+          >
+            {localStorage.getItem("lang") == "fa" ? "فا" : "En"}
+          </p>
+        </Box>
+        <Box display="flex" sx={{ justifyContent: "center" }} flexGrow={1}>
           <Typography color="inherit" variant="h6">
             <Link
               color="inherit"

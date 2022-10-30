@@ -1,0 +1,1 @@
+export const checkfa = localStorage.getItem('lang') === 'fa'
