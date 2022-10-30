@@ -4,6 +4,7 @@ import { useLocalStorage } from "react-use";
 import { useHistory } from "react-router-dom";
 
 import axios from "axios";
+import { checkfa } from "utils/checkfa";
 
 function HomeLoggedOut() {
   const [, setLoggedIn] = useLocalStorage("loggedIn", false);
@@ -41,15 +42,21 @@ function HomeLoggedOut() {
       }}
     >
       <Grid item xs={10}>
-        <Typography variant="h5">
-          <span>
-            ZeroUI - ZeroTier Controller Web UI - is a web user interface for a
-            self-hosted ZeroTier network controller.
+        <Typography style={{ direction: checkfa && "rtl" }} variant="h5">
+          <span style={{ direction: checkfa && "rtl" }}>
+            {checkfa
+              ? "ZeroUI - یک رابط کاربری برای استفاده از zero-tier است"
+              : `ZeroUI - ZeroTier Controller Web UI - is a web user interface for a
+              self-hosted ZeroTier network controller.`}
           </span>
         </Typography>
 
-        <Typography>
-          <span>Please Log In to continue</span>
+        <Typography style={{ direction: checkfa && "rtl" }}>
+          <span>
+            {checkfa
+              ? "لطفا برای ادامه ورود کنید"
+              : "Please Log In to continue"}
+          </span>
         </Typography>
       </Grid>
     </Grid>
