@@ -16,6 +16,7 @@ import { compile } from "external/RuleCompiler";
 import debounce from "lodash/debounce";
 import { useState } from "react";
 import API from "utils/API";
+import { checkfa } from "utils/checkfa";
 
 function NetworkRules({ network, callback }) {
   const [editor, setEditor] = useState(null);
@@ -86,8 +87,11 @@ function NetworkRules({ network, callback }) {
 
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>Flow Rules</Typography>
+      <AccordionSummary
+        style={{ direction: checkfa && "rtl" }}
+        expandIcon={<ExpandMoreIcon />}
+      >
+        <Typography>{checkfa ? "قوانین جریان" : "ّFlow Rules"}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         {/*   Important note: value in CodeMirror instance means INITAIL VALUE
@@ -130,7 +134,7 @@ function NetworkRules({ network, callback }) {
             </Typography>
           ) : (
             <Button variant="contained" color="primary" onClick={saveChanges}>
-              Save Changes
+              {checkfa ? "ذخیره تغییرات" : "Save Changes"}
             </Button>
           )}
         </Grid>

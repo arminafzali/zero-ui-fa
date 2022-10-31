@@ -12,6 +12,7 @@ import {
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 import API from "utils/API";
+import { checkfa } from "utils/checkfa";
 
 function DeleteMember({ nwid, mid, callback }) {
   const [open, setOpen] = useState(false);
@@ -38,17 +39,23 @@ function DeleteMember({ nwid, mid, callback }) {
       </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
-          {"Are you sure you want to delete this member?"}
+          {checkfa
+            ? "مطمئن هستید که میخواهید این کاربر را حذف کنید؟"
+            : "Are you sure you want to delete this member?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>This action cannot be undone.</DialogContentText>
+          <DialogContentText>
+            {checkfa
+              ? "این عمل قابل بازیابی نیست."
+              : "This action cannot be undone."}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            {checkfa ? "انصراف" : "Cancel"}
           </Button>
           <Button onClick={deleteMemberReq} color="secondary">
-            Delete
+            {checkfa ? "حذف" : "Delete"}
           </Button>
         </DialogActions>
       </Dialog>

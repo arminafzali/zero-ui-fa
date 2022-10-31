@@ -1,5 +1,7 @@
 import { Grid, Link, Typography } from "@material-ui/core";
+import { ArrowForward } from "@material-ui/icons";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+
 import NetworkHeader from "components/NetworkHeader";
 import NetworkManagement from "components/NetworkManagement";
 import NetworkMembers from "components/NetworkMembers";
@@ -9,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink, useHistory, useParams } from "react-router-dom";
 import { useLocalStorage } from "react-use";
 import API from "utils/API";
+import { checkfa } from "utils/checkfa";
 import useStyles from "./Network.styles";
 
 function Network() {
@@ -39,9 +42,20 @@ function Network() {
   if (loggedIn) {
     return (
       <>
-        <Link color="inherit" component={RouterLink} to="/" underline="none">
-          <ArrowBackIcon className={classes.backIcon}></ArrowBackIcon>
-          Networks
+        <Link
+          color="inherit"
+          component={RouterLink}
+          to="/"
+          underline="none"
+          style={{ direction: checkfa && "rtl", width: "100%" }}
+        >
+          {!checkfa && (
+            <ArrowBackIcon className={classes.backIcon}></ArrowBackIcon>
+          )}
+          {checkfa ? "شبکه ها" : "Networks"}
+          {checkfa && (
+            <ArrowForward className={classes.backIcon}></ArrowForward>
+          )}
         </Link>
         <div className={classes.container}>
           {network["config"] && (

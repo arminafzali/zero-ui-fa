@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import BuildIcon from "@material-ui/icons/Build";
 import { useState } from "react";
+import { checkfa } from "utils/checkfa";
 import Tag from "./components/Tag";
 
 function MemberSettings({ member, network, handleChange }) {
@@ -30,7 +31,11 @@ function MemberSettings({ member, network, handleChange }) {
         <BuildIcon style={{ fontSize: 20 }} />
       </IconButton>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{"Member " + member.config.id + " settings"}</DialogTitle>
+        <DialogTitle>
+          {checkfa
+            ? `تغییرات کاربر ${member.config.id}`
+            : "Member " + member.config.id + " settings"}
+        </DialogTitle>
         <DialogContent>
           <Grid item>
             <Checkbox
@@ -43,7 +48,9 @@ function MemberSettings({ member, network, handleChange }) {
                 "checkbox"
               )}
             />
-            <span>Allow Ethernet Bridging</span>
+            <span>
+              {checkfa ? "اجازه پل زدن اترنتی" : "Allow Ethernet Bridging"}
+            </span>
           </Grid>
           <Grid item>
             <Checkbox
@@ -56,17 +63,25 @@ function MemberSettings({ member, network, handleChange }) {
                 "checkbox"
               )}
             />
-            <span>Do Not Auto-Assign IPs</span>
+            <span>
+              {checkfa
+                ? "از اختصاص خودکار IP ها خودداری شود"
+                : "Do Not Auto-Assign IPs"}
+            </span>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h6">Capabilities</Typography>
+              <Typography variant="h6">
+                {checkfa ? "توانایی ها" : "Capabilities"}
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <Paper style={{ padding: 20 }}>
                 {Object.entries(network["capabilitiesByName"] || []).length ===
                 0
-                  ? "No capabilities defined"
+                  ? checkfa
+                    ? "هیچ توانایی ای تعریف نشده است"
+                    : "No capabilities defined"
                   : ""}
                 {Object.entries(network["capabilitiesByName"] || []).map(
                   ([capName, capId]) => (
@@ -96,7 +111,7 @@ function MemberSettings({ member, network, handleChange }) {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h6">Tags</Typography>
+              <Typography variant="h6">{checkfa ? "تگ ها" : "Tags"}</Typography>
             </Grid>
             {Object.entries(network["tagsByName"] || []).length === 0 ? (
               <Grid item xs={12}>

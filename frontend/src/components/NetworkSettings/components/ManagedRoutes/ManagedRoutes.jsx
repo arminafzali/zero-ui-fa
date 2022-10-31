@@ -15,6 +15,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import DataTable from "react-data-table-component";
 
 import { validateIP, normilizeIP, validateCIDR } from "utils/IP";
+import { checkfa } from "utils/checkfa";
 
 function ManagedRoutes({ routes, handleChange }) {
   const [destination, setDestination] = useState("");
@@ -71,12 +72,12 @@ function ManagedRoutes({ routes, handleChange }) {
     },
     {
       id: "target",
-      name: "Target",
+      name: checkfa ? "هدف" : "Target",
       cell: (row) => row["target"],
     },
     {
       id: "via",
-      name: "via",
+      name: checkfa ? "از طریق" : "via",
       cell: (row) => (row["via"] ? row["via"] : "(LAN)"),
     },
   ];
@@ -84,13 +85,14 @@ function ManagedRoutes({ routes, handleChange }) {
   return (
     <>
       <Typography style={{ paddingBottom: "10px" }}>
-        Managed Routes ({routes.length + "/128"})
+        {checkfa ? "مسیر های مدیریت شده" : "Managed Routes"} (
+        {routes.length + "/128"})
       </Typography>
       <Box border={1} borderColor="grey.300">
         <Grid item style={{ margin: "10px" }}>
           <DataTable noHeader={true} columns={columns} data={routes} />
           <Divider />
-          <Typography>Add Routes</Typography>
+          <Typography>{checkfa ? "افزودن مسیر" : "Add Routes"}</Typography>
           <List
             style={{
               display: "flex",
@@ -100,7 +102,7 @@ function ManagedRoutes({ routes, handleChange }) {
             <TextField
               value={destination}
               onChange={handleDestinationInput}
-              placeholder={"Destination (CIDR)"}
+              placeholder={`${checkfa ? "مقصد" : "Destination"} (CIDR)`}
             />
             <Divider
               orientation="vertical"
@@ -112,7 +114,7 @@ function ManagedRoutes({ routes, handleChange }) {
             <TextField
               value={via}
               onChange={handleViaInput}
-              placeholder={"Via (Optional)"}
+              placeholder={checkfa ? "از طریق (اختیاری)" : "Via (Optional)"}
             />
             <IconButton size="small" color="primary" onClick={addRouteReq}>
               <AddIcon

@@ -142,7 +142,7 @@ function Tag({ member, tagName, tagDetail, handleChange }) {
             <Input
               value={tagValue}
               onChange={handleInputChange}
-              placeholder="Tag Value"
+              placeholder=""
             />
           </Grid>
         </Grid>

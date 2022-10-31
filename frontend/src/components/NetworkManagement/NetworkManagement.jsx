@@ -17,6 +17,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import API from "utils/API";
+import { checkfa } from "utils/checkfa";
 
 function NetworkManagement() {
   const { nwid } = useParams();
@@ -43,9 +44,9 @@ function NetworkManagement() {
   };
 
   return (
-    <Accordion>
+    <Accordion style={{ direction: checkfa && "rtl" }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>Management</Typography>
+        <Typography>{checkfa ? "مدیریت" : "Management"}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Button
@@ -54,7 +55,7 @@ function NetworkManagement() {
           startIcon={<DeleteIcon />}
           onClick={handleClickOpen}
         >
-          Delete Network
+          {checkfa ? "حذف شبکه" : " Delete Network"}
         </Button>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>

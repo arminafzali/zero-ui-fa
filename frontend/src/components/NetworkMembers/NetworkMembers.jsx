@@ -20,6 +20,7 @@ import DeleteMember from "./components/DeleteMember";
 import ManagedIP from "./components/ManagedIP";
 import MemberName from "./components/MemberName";
 import MemberSettings from "./components/MemberSettings";
+import { checkfa } from "utils/checkfa";
 
 function NetworkMembers({ network }) {
   const { nwid } = useParams();
@@ -67,7 +68,7 @@ function NetworkMembers({ network }) {
   const columns = [
     {
       id: "auth",
-      name: "Authorized",
+      name: checkfa ? "مجاز" : "Authorized",
       minWidth: "80px",
       cell: (row) => (
         <Checkbox
@@ -79,7 +80,7 @@ function NetworkMembers({ network }) {
     },
     {
       id: "address",
-      name: "Address",
+      name: checkfa ? "آدرس" : "Address",
       minWidth: "150px",
       cell: (row) => (
         <Typography variant="body2">{row.config.address}</Typography>
@@ -87,25 +88,29 @@ function NetworkMembers({ network }) {
     },
     {
       id: "name",
-      name: "Name / Description",
+      name: checkfa ? "نام / توضیحات" : "Name / Description",
       minWidth: "250px",
       cell: (row) => <MemberName member={row} handleChange={handleChange} />,
     },
     {
       id: "ips",
-      name: "Managed IPs",
+      name: checkfa ? "آی پی های مدیریت شده" : "Managed IPs",
       minWidth: "220px",
       cell: (row) => <ManagedIP member={row} handleChange={handleChange} />,
     },
     {
       id: "status",
-      name: "Last Seen",
+      name: checkfa ? "آخرین بازدید" : "Last Seen",
       minWidth: "100px",
       cell: (row) =>
         row.online === 1 ? (
-          <Typography style={{ color: "#008000" }}>{"ONLINE"}</Typography>
+          <Typography style={{ color: "#008000" }}>
+            {checkfa ? "آنلاین" : "ONLINE"}
+          </Typography>
         ) : row.controllerId === row.config.address ? (
-          <Typography style={{ color: "#c5e31e" }}>{"CONTROLLER"}</Typography>
+          <Typography style={{ color: "#c5e31e" }}>
+            {checkfa ? "کنترلر" : "CONTROLLER"}
+          </Typography>
         ) : row.online === 0 ? (
           <Typography color="error">
             {row.lastOnline !== 0
@@ -116,12 +121,16 @@ function NetworkMembers({ network }) {
               : "OFFLINE"}
           </Typography>
         ) : (
-          <Typography style={{ color: "#f1c232" }}>{"RELAYED"}</Typography>
+          <Typography style={{ color: "#f1c232" }}>
+            {checkfa ? "رله شده" : "RELAYED"}
+          </Typography>
         ),
     },
     {
       id: "physicalip",
-      name: "Version / Physical IP / Latency",
+      name: checkfa
+        ? "نسخه / آی پی فیزیکی / تاخیر"
+        : "Version / Physical IP / Latency",
       minWidth: "220px",
       cell: (row) =>
         row.online === 1 ? (
@@ -160,9 +169,9 @@ function NetworkMembers({ network }) {
   ];
 
   return (
-    <Accordion defaultExpanded={true}>
+    <Accordion style={{ direction: checkfa && "rtl" }} defaultExpanded={true}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>Members</Typography>
+        <Typography>{checkfa ? "کاربران" : "members"}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Grid container direction="column" spacing={3}>
@@ -188,8 +197,17 @@ function NetworkMembers({ network }) {
                 }}
               >
                 <Typography variant="h6" style={{ padding: "10%" }}>
-                  No devices have joined this network. Use the app on your
-                  devices to join <b>{nwid}</b>.
+                  {checkfa ? (
+                    <>
+                      هیچ دستگاهی به این شبکه متصل نشده است. از اپلیکیشن روی
+                      دستگاه ها استفاده کنید تا به <b>{nwid}</b> متصل شوید
+                    </>
+                  ) : (
+                    <>
+                      No devices have joined this network. Use the app on your
+                      devices to join <b>{nwid}</b>.
+                    </>
+                  )}
                 </Typography>
               </Grid>
             )}

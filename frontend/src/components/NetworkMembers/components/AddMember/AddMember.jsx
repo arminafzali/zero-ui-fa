@@ -4,6 +4,7 @@ import { List, Typography, IconButton, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import API from "utils/API";
+import { checkfa } from "utils/checkfa";
 
 function AddMember({ nwid, callback }) {
   const [member, setMember] = useState("");
@@ -26,7 +27,9 @@ function AddMember({ nwid, callback }) {
 
   return (
     <>
-      <Typography>Manually Add Member</Typography>
+      <Typography>
+        {checkfa ? "افزودن دستی کاربر" : "Manually Add Member"}
+      </Typography>
       <List
         disablePadding={true}
         style={{

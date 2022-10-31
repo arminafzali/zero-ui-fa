@@ -17,6 +17,7 @@ import DataTable from "react-data-table-component";
 
 import { addressPool } from "utils/NetworkConfig";
 import { getCIDRAddress, validateIP, normilizeIP } from "utils/IP";
+import { checkfa } from "utils/checkfa";
 
 function IPv4AutoAssign({ ipAssignmentPools, handleChange }) {
   const [start, setStart] = useState("");
@@ -89,19 +90,21 @@ function IPv4AutoAssign({ ipAssignmentPools, handleChange }) {
     },
     {
       id: "Start",
-      name: "Start",
+      name: checkfa ? "شروع" : "Start",
       cell: (row) => row["ipRangeStart"],
     },
     {
       id: "End",
-      name: "End",
+      name: checkfa ? "پایان" : "End",
       cell: (row) => row["ipRangeEnd"],
     },
   ];
 
   return (
     <>
-      <Typography>IPv4 Auto-Assign</Typography>
+      <Typography>
+        {checkfa ? "اختصاص خودکار IPv4" : "IPv4 Auto-Assign"}
+      </Typography>
       <div
         style={{
           padding: "30px",
@@ -132,7 +135,7 @@ function IPv4AutoAssign({ ipAssignmentPools, handleChange }) {
             data={ipAssignmentPools}
           />
           <Divider />
-          <Typography>Add IPv4 Pool</Typography>
+          <Typography>{checkfa ? "افزودن Ipv4" : "Add IPv4"}</Typography>
           <List
             style={{
               display: "flex",
@@ -142,7 +145,7 @@ function IPv4AutoAssign({ ipAssignmentPools, handleChange }) {
             <TextField
               value={start}
               onChange={handleStartInput}
-              placeholder={"Start"}
+              placeholder={checkfa ? "شروع" : "Start"}
             />
             <Divider
               orientation="vertical"
@@ -154,7 +157,7 @@ function IPv4AutoAssign({ ipAssignmentPools, handleChange }) {
             <TextField
               value={end}
               onChange={handleEndInput}
-              placeholder={"End"}
+              placeholder={checkfa ? "پایان" : "End"}
             />
             <IconButton
               size="small"
